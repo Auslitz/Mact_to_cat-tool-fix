@@ -290,7 +290,7 @@ def _hash_cat_string(string, type):
 	# enable this for (branch/bank/node titles) ((Bank Nemesis, Node Purchase))
 	# disable this for (track/condition name/value and params/value) ((Track Animation, "C_PLAYER\PICKUP"))
 	if type:
-		result = result | 0x80000000
+		result = numpy.uint32(result | 0x80000000)
 
 	result = hex(int(result))
 	# pad and flip endian
@@ -1078,11 +1078,6 @@ def write_param_data(file, logic_tree):
 					param_id |= 0x0004
 			else:
 				print_debug("Warning: Unable to match param {0} in param database.".format(logic_param.title))
-				param_id <<= 3
-				if logic_param.value_type not in ("bool", ):
-					param_id |= 0x0004
-			if not param_id:
-				print("Bug: Unable to find ID for param, file will break.")
 				param_id = 0
 			if (i < number_of_params-1):
 				param_id |= 0x0001
